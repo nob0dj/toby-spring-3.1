@@ -12,8 +12,11 @@ public class UserDaoTest {
 	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 	
+		//@Configuration 클래스 지정
+		//@Bean 메소드의 리턴객체를 빈으로 관리하는 ApplicationContext를 구성한다. 
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
 		
+		//getBean의 두번째 인자로 class를 전달하면, 해당타입의 빈 객체를 전달한다.(형변환 불필요)
 		UserDao dao = context.getBean("userDao", UserDao.class);
 
 		User user = new User();
