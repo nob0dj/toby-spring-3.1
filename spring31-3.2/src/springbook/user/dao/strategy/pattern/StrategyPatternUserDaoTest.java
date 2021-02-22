@@ -1,6 +1,7 @@
-package springbook.test;
+package springbook.user.dao.strategy.pattern;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 import java.sql.SQLException;
@@ -11,23 +12,20 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import springbook.user.dao.UserDao;
 import springbook.user.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations="/testApplicationContext.xml")
-public class UserDaoTest2 {
+@ContextConfiguration(locations="/testStrategyPatternApplicationContext.xml")
+public class StrategyPatternUserDaoTest {
 	@Autowired
 	ApplicationContext context;
 	
 	@Autowired
-	private UserDao dao; 
+	UserDao2 dao;
 	
 	private User user1;
 	private User user2;
@@ -35,10 +33,19 @@ public class UserDaoTest2 {
 	
 	@Before
 	public void setUp() {
-		
 		this.user1 = new User("honggd", "홍길동", "1234");
 		this.user2 = new User("sinsa", "신사", "1234");
 		this.user3 = new User("sejong", "세종", "1234");
+	}
+	
+	
+	/**
+	 * @Autowired DI받은 빈과 getBean() 리턴객체 동일성 테스트
+	 */
+	@Test
+	public void test() {
+		UserDao2 dao = context.getBean("userDao", UserDao2.class);
+		assertThat(dao, is(sameInstance(this.dao)));
 	}
 	
 	@Test 
