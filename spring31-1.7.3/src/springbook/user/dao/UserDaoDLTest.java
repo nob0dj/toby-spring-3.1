@@ -1,8 +1,7 @@
-package springbook.run;
+package springbook.user.dao;
 
 import java.sql.SQLException;
 
-import springbook.user.dao.UserDao;
 import springbook.user.domain.User;
 
 /**
